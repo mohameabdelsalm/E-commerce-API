@@ -85,8 +85,6 @@ namespace Store.Service
                 CreateAt= product.CreateAt,
                 BrandName=product.ProductBrand.Name,
                 TypeName=product.ProductType.Name,
-
-                 
             };
             return MAppedProduct;
         }
