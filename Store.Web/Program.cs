@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Store.Data.Contexts;
 using Store.Repository.Interface;
 using Store.Repository.Repository;
+using Store.Service.Mapping;
 using Store.Web.Helper;
 
 namespace Store.Web
@@ -14,7 +15,6 @@ namespace Store.Web
             var builder = WebApplication.CreateBuilder(args);
 
 
-            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             // Add services to the container.
             builder.Services.AddControllers();
@@ -23,6 +23,10 @@ namespace Store.Web
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("localConnection"));
             });
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+            builder.Services.AddAutoMapper(typeof(MappingProfile));
+
+
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 

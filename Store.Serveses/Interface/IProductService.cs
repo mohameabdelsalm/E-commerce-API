@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Store.Service
+namespace Store.Service.Interface
 {
     public interface IProductService
     {
