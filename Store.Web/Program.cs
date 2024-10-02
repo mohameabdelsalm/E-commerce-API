@@ -3,7 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using Store.Data.Contexts;
 using Store.Repository.Interface;
 using Store.Repository.Repository;
+using Store.Service.Interface;
 using Store.Service.Mapping;
+using Store.Service.Service;
 using Store.Web.Helper;
 
 namespace Store.Web
@@ -24,6 +26,7 @@ namespace Store.Web
                 options.UseSqlServer(builder.Configuration.GetConnectionString("localConnection"));
             });
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+            builder.Services.AddScoped<IProductService,ProductService>();
             builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 
@@ -40,6 +43,7 @@ namespace Store.Web
             }
 
             app.UseHttpsRedirection();
+            app.UseStaticFiles();
 
             app.UseAuthorization();
 
