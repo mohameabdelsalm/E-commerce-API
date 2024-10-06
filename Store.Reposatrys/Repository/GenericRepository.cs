@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Store.Data.Contexts;
 using Store.Data.Entites;
 using Store.Repository.Interface;
+using Store.Repository.Specifications;
 
 namespace Store.Repository.Repository
 {
@@ -26,10 +28,22 @@ namespace Store.Repository.Repository
 
        => await _context.Set<TEntity>().ToListAsync();
 
-        public async Task<TEntity> GetByIdAsync(TKey? id)
+	
+
+		public async Task<TEntity> GetByIdAsync(TKey? id)
             
           => await _context.Set<TEntity>().FindAsync(id);
-        public void Update(TEntity entity)
-       => _context.Set<TEntity>().Update(entity);
-    }
+		public void Update(TEntity entity)
+	   => _context.Set<TEntity>().Update(entity);
+
+
+	  public async Task<TEntity> GetWithSpecificationByIdAsync(ISpecification<TEntity> spec)
+        => await ApplySpecification(spec).FirstOrDefaultAsync();
+		public async Task<IReadOnlyList<TEntity>> GetAllWithSpecificationAsync(ISpecification<TEntity> spec)
+		 => await ApplySpecification(spec).ToListAsync();
+
+        //Enhancemt Code
+        private IQueryable<TEntity> ApplySpecification(ISpecification<TEntity> spec)
+            => SpecificationEvaluator<TEntity, TKey>.GetQuery(_context.Set<TEntity>(), spec);
+	}
 }
