@@ -18,9 +18,18 @@ namespace Store.Repository.Specifications
 
 		public List<Expression<Func<T, object>>> Include { get; } = new List<Expression<Func<T, object>>>();
 
+		public Expression<Func<T, object>> OrderBy { get; private set; }
+		public Expression<Func<T, object>> OrderByDescending { get; private set; }
 		protected void AddInclude(Expression<Func<T, object>> IncludeExp)
 		
 	    => Include.Add(IncludeExp);
-		
+
+		protected void AddOrderBy(Expression<Func<T, object>> orderByExperssion)
+			=> OrderBy= orderByExperssion;
+		protected void AddOrderByDescending(Expression<Func<T, object>> orderByDescendingExperssion)
+			=> OrderBy = orderByDescendingExperssion;
+
+
+
 	}
 }

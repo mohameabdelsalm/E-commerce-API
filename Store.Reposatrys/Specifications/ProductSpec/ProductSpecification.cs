@@ -10,5 +10,6 @@ namespace Store.Repository.Specifications.ProductSpec
 	{
 		public int? ProductTypeId { get; set; }
 		public int? ProductBrandId { get; set; }
+		public string? Sort { get; set; }
 	}
 }

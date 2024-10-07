@@ -18,8 +18,14 @@ namespace Store.Repository.Specifications
 		{
 			var query = InputQuery;
 			if (spec.Criteria is not null)
-			
-				query = query.Where(spec.Criteria);// x => x.ProductTypeId==3
+
+				if (spec.OrderBy is not null)
+					query = query.OrderBy(spec.OrderBy);// x =>x.Name
+
+			if (spec.OrderByDescending is not null)
+				query = query.OrderByDescending(spec.OrderByDescending);
+
+			query = query.Where(spec.Criteria);// x => x.ProductTypeId==3
 			query = spec.Include.Aggregate(query,(current, IncludeExp)=>current.Include(IncludeExp));
 			return query;
 			
