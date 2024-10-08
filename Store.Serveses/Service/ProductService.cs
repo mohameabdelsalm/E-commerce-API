@@ -3,6 +3,7 @@ using Store.Data.Entites;
 using Store.Repository.Interface;
 using Store.Repository.Specifications.ProductSpec;
 using Store.Service.Dto;
+using Store.Service.Helper;
 using Store.Service.Interface;
 
 namespace Store.Service.Service
@@ -26,12 +27,18 @@ namespace Store.Service.Service
             return mappedBrand;
         }
 
-        public async Task<IReadOnlyList<ProductDto>> GetAllProductAsync(ProductSpecification input)
+        public async Task<PagnetionDto<ProductDto>> GetAllProductAsync(ProductSpecification input)
         {
             var spec=new ProductsWithSpecification(input);
+
             var product = await _unitOfWork.Repository<Product, int>().GetAllWithSpecificationAsync(spec);
-            var mappedProduct = _mapper.Map<IReadOnlyList<ProductDto>>(product);
-            return mappedProduct;
+
+            var countSpec = new ProductCountWithSpecification(input);
+
+            var count = await _unitOfWork.Repository<Product, int>().GetCountSpecificationAsync(spec);
+
+			var mappedProduct = _mapper.Map<IReadOnlyList<ProductDto>>(product);
+            return new PagnetionDto<ProductDto>(input.PageIndex,input.PageSize, count, mappedProduct);
         }
 
         public async Task<IReadOnlyList<BrandTypeDto>> GetAllTypeAsync()

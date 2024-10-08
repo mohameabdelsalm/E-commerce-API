@@ -10,9 +10,7 @@ namespace Store.Repository.Specifications
 {
 	public class SpecificationEvaluator<TEntity, Tkey> where TEntity : BaseEntity<Tkey>
 	{
-		public SpecificationEvaluator()
-		{
-		}
+		
 
 		public static IQueryable<TEntity> GetQuery(IQueryable<TEntity> InputQuery, ISpecification<TEntity> spec)
 		{
@@ -24,6 +22,9 @@ namespace Store.Repository.Specifications
 
 			if (spec.OrderByDescending is not null)
 				query = query.OrderByDescending(spec.OrderByDescending);
+
+		 if (spec.IsPaganted)
+				query=query.Skip(spec.Skip).Take(spec.Take);
 
 			query = query.Where(spec.Criteria);// x => x.ProductTypeId==3
 			query = spec.Include.Aggregate(query,(current, IncludeExp)=>current.Include(IncludeExp));
