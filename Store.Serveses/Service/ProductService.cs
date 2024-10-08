@@ -31,13 +31,14 @@ namespace Store.Service.Service
         {
             var spec=new ProductsWithSpecification(input);
 
-            var product = await _unitOfWork.Repository<Product, int>().GetAllWithSpecificationAsync(spec);
-
             var countSpec = new ProductCountWithSpecification(input);
 
-            var count = await _unitOfWork.Repository<Product, int>().GetCountSpecificationAsync(spec);
+            var count = await _unitOfWork.Repository<Product, int>().GetCountSpecificationAsync(countSpec);
+
+			var product = await _unitOfWork.Repository<Product, int>().GetAllWithSpecificationAsync(spec);
 
 			var mappedProduct = _mapper.Map<IReadOnlyList<ProductDto>>(product);
+
             return new PagnetionDto<ProductDto>(input.PageIndex,input.PageSize, count, mappedProduct);
         }
 
