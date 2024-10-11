@@ -1,8 +1,10 @@
 
 using Microsoft.EntityFrameworkCore;
+using StackExchange.Redis;
 using Store.Data.Contexts;
 using Store.Repository.Interface;
 using Store.Repository.Repository;
+using Store.Service.Caching;
 using Store.Service.Interface;
 using Store.Service.Mapping;
 using Store.Service.Service;
@@ -27,7 +29,16 @@ namespace Store.Web
             });
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddScoped<IProductService,ProductService>();
-            builder.Services.AddAutoMapper(typeof(MappingProfile));
+			builder.Services.AddScoped<IcacheService,cacheService>();
+			builder.Services.AddAutoMapper(typeof(MappingProfile));
+
+
+            builder.Services.AddSingleton<IConnectionMultiplexer>(config =>
+            {
+                var configuration = ConfigurationOptions.Parse(builder.Configuration.GetConnectionString("Redis"));
+
+				return ConnectionMultiplexer.Connect(configuration);
+            });
 
 
             builder.Services.AddEndpointsApiExplorer();

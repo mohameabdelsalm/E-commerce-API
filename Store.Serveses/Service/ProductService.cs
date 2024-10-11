@@ -30,16 +30,17 @@ namespace Store.Service.Service
         public async Task<PagnetionDto<ProductDto>> GetAllProductAsync(ProductSpecification input)
         {
             var spec=new ProductsWithSpecification(input);
-
-            var countSpec = new ProductCountWithSpecification(input);
-
-            var count = await _unitOfWork.Repository<Product, int>().GetCountSpecificationAsync(countSpec);
-
 			var product = await _unitOfWork.Repository<Product, int>().GetAllWithSpecificationAsync(spec);
 
-			var mappedProduct = _mapper.Map<IReadOnlyList<ProductDto>>(product);
+            var countSpec = new ProductCountWithSpecification(input);
+            var count = await _unitOfWork.Repository<Product, int>().GetCountSpecificationAsync(countSpec);
 
-            return new PagnetionDto<ProductDto>(input.PageIndex,input.PageSize, count, mappedProduct);
+
+            var mappedProduct = _mapper.Map<IReadOnlyList<ProductDto>>(product);
+
+
+
+            return new PagnetionDto<ProductDto>(input.PageIndex, input.PageSize, count, mappedProduct);
         }
 
         public async Task<IReadOnlyList<BrandTypeDto>> GetAllTypeAsync()
