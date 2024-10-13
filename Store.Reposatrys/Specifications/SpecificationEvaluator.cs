@@ -16,20 +16,22 @@ namespace Store.Repository.Specifications
 		{
 			var query = InputQuery;
 			if (spec.Criteria is not null)
+				query = query.Where(spec.Criteria);//x=>x.TypeId=3;
 
-				if (spec.OrderBy is not null)
+			query = spec.Include.Aggregate(query, (current, IncludeExp) => current.Include(IncludeExp));
+			
+
+			if (spec.OrderBy is not null)
 					query = query.OrderBy(spec.OrderBy);// x =>x.Name
 
 			if (spec.OrderByDescending is not null)
 				query = query.OrderByDescending(spec.OrderByDescending);
 
 		 if (spec.IsPaganted)
-				query=query.Skip(spec.Skip).Take(spec.Take);
+			query=query.Skip(spec.Skip).Take(spec.Take);
 
-			query = query.Where(spec.Criteria);// x => x.ProductTypeId==3
-			query = spec.Include.Aggregate(query,(current, IncludeExp)=>current.Include(IncludeExp));
+
 			return query;
-			
 		}
 	}
 }

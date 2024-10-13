@@ -37,7 +37,7 @@ namespace Store.Repository.Specifications
 		protected void AddOrderByDescending(Expression<Func<T, object>> orderByDescendingExperssion)
 			=> OrderBy = orderByDescendingExperssion;
 
-		protected void ApplyPagination(int take, int skip)
+		protected void ApplyPagination(int skip, int take)
 		{
 			Take = take;
 			Skip = skip;

@@ -20,7 +20,7 @@ namespace Store.Repository.Specifications.ProductSpec
 			AddInclude(x => x.ProductType);
 			AddOrderBy(x => x.Name);
 
-			ApplyPagination(spec.PageSize * (spec.PageIndex - 1), spec.PageSize);//Int take ,INt Skip
+			ApplyPagination(spec.PageSize * (spec.PageIndex- 1), spec.PageSize);//Int take ,INt Skip
 
 			if (!string.IsNullOrEmpty(spec.Sort))
 			{

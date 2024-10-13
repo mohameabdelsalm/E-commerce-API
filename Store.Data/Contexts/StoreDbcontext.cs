@@ -20,5 +20,6 @@ namespace Store.Data.Contexts
         public DbSet<ProductBrand> productBrands { get; set; }
         public DbSet<Product> products { get; set; }
         public DbSet<ProductType> productTypes { get; set; }
-    }
+		public DbSet<DeliveryMethod>deliveryMethods { get; set; }
+	}
 }

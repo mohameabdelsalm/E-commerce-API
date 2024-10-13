@@ -2,8 +2,12 @@
 using Microsoft.EntityFrameworkCore;
 using StackExchange.Redis;
 using Store.Data.Contexts;
+using Store.Repository.Basket;
+using Store.Repository.Basket.Model;
 using Store.Repository.Interface;
 using Store.Repository.Repository;
+using Store.Service.Basket;
+using Store.Service.Basket.AutoMapper;
 using Store.Service.Caching;
 using Store.Service.Interface;
 using Store.Service.Mapping;
@@ -29,11 +33,14 @@ namespace Store.Web
             });
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddScoped<IProductService,ProductService>();
+			builder.Services.AddScoped<IBasketRepostory, BasketRepostory>();
+			builder.Services.AddScoped<IBasketService, BasketService>();
 			builder.Services.AddScoped<IcacheService,cacheService>();
 			builder.Services.AddAutoMapper(typeof(MappingProfile));
+			builder.Services.AddAutoMapper(typeof(BasketProfile));
 
 
-            builder.Services.AddSingleton<IConnectionMultiplexer>(config =>
+			builder.Services.AddSingleton<IConnectionMultiplexer>(config =>
             {
                 var configuration = ConfigurationOptions.Parse(builder.Configuration.GetConnectionString("Redis"));
 
