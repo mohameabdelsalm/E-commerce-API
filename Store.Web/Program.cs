@@ -12,6 +12,7 @@ using Store.Service.Caching;
 using Store.Service.Interface;
 using Store.Service.Mapping;
 using Store.Service.Service;
+using Store.Web.Extensions;
 using Store.Web.Helper;
 
 namespace Store.Web
@@ -22,16 +23,22 @@ namespace Store.Web
         {
             var builder = WebApplication.CreateBuilder(args);
 
+			
 
-
-            // Add services to the container.
-            builder.Services.AddControllers();
+			// Add services to the container.
+			builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddDbContext<StoreDbcontext>(options =>
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("localConnection"));
             });
-            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+			builder.Services.AddDbContext<StoreIdentityDbContext>(options =>
+			{
+				options.UseSqlServer(builder.Configuration.GetConnectionString("IdentityConnection"));
+			});
+
+			builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddScoped<IProductService,ProductService>();
 			builder.Services.AddScoped<IBasketRepostory, BasketRepostory>();
 			builder.Services.AddScoped<IBasketService, BasketService>();
@@ -47,6 +54,7 @@ namespace Store.Web
 				return ConnectionMultiplexer.Connect(configuration);
             });
 
+            builder.Services.AddIdentityServices();
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
@@ -61,7 +69,10 @@ namespace Store.Web
             }
 
             app.UseHttpsRedirection();
+
             app.UseStaticFiles();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

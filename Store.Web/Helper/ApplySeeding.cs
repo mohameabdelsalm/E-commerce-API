@@ -1,5 +1,8 @@
-﻿using Store.Data.Contexts;
+﻿using Microsoft.AspNetCore.Identity;
+using Store.Data.Contexts;
+using Store.Data.Entites.IdentityEntites;
 using Store.Reposatrys;
+using Store.Repository;
 
 namespace Store.Web.Helper
 {
@@ -14,8 +17,12 @@ namespace Store.Web.Helper
                 try
                 {
                     var context = serveses.GetRequiredService<StoreDbcontext>();
-                    await SeedingContext.SeedAsync(context, factory);
-                }
+
+					var UserManger = serveses.GetRequiredService<UserManager<AppUser>>();
+
+					await SeedingContext.SeedAsync(context, factory);
+					await SeedingIdentityUser.SeedUserAsync(UserManger);
+				}
                 catch (Exception ex)
                 {
                     var loger = factory.CreateLogger<ApplySeeding>();
