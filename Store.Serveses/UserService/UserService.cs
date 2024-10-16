@@ -66,7 +66,8 @@ namespace Store.Service.UserService
 
 				};
 
-			throw new Exception("Is InValied");
+
+			throw new Exception("User creation failed: " + string.Join(", ", Create.Errors.Select(e => e.Description)));
 
 
 		}
