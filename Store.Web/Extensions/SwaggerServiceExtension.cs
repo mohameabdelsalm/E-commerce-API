@@ -42,7 +42,7 @@ namespace Store.Web.Extensions
 
 				var SecurityRequirment = new OpenApiSecurityRequirement
 				{
-					{ SecurityScheme,new[]{ "bearer"} }
+					{ SecurityScheme,new[]{"bearer"} }
 				};
 				options.AddSecurityRequirement(SecurityRequirment);
 			});

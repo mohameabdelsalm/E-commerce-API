@@ -24,7 +24,8 @@ namespace Store.Web.Extensions
 						ValidateIssuerSigningKey = true,
 						IssuerSigningKey= new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Token:Key"])),
 						ValidateIssuer = true,
-						ValidIssuer = _config["Token:Issuer"]
+						ValidIssuer = _config["Token:Issuer"],
+						ValidateAudience = false,
 					}; 
 				}); 
 

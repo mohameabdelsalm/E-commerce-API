@@ -25,5 +25,15 @@ namespace Store.Web.Controllers
 			return Ok(user);
 			
 		}
-    }
+
+		[HttpPost]
+		public async Task<ActionResult<UserDto>> Register(RegisterDto Model)
+		{
+			var user = await _userService.Register(Model);
+			if (user == null)
+				return BadRequest(Model);
+			return Ok(user);
+
+		}
+	}
 }
