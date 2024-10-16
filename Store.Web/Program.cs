@@ -58,7 +58,7 @@ namespace Store.Web
             builder.Services.AddIdentityServices(builder.Configuration);
 
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            builder.Services.AddSwaggarDocumation();
 
             var app = builder.Build();
             await ApplySeeding.ApplySeedingAsync(app);
