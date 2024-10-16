@@ -4,16 +4,15 @@ using Store.Repository.Interface;
 using Store.Repository.Specifications.ProductSpec;
 using Store.Service.Dto;
 using Store.Service.Helper;
-using Store.Service.Interface;
 
-namespace Store.Service.Service
+namespace Store.Service.Interface
 {
     public class ProductService : IProductService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public ProductService(IUnitOfWork unitOfWork,IMapper mapper)
+        public ProductService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
@@ -22,15 +21,15 @@ namespace Store.Service.Service
         {
             var brands = await _unitOfWork.Repository<ProductBrand, int>().GetAllAsNoTrackingAsync();
 
-            var mappedBrand =_mapper.Map<IReadOnlyList<BrandTypeDto>>(brands);
+            var mappedBrand = _mapper.Map<IReadOnlyList<BrandTypeDto>>(brands);
 
             return mappedBrand;
         }
 
         public async Task<PagnetionDto<ProductDto>> GetAllProductAsync(ProductSpecification input)
         {
-            var spec=new ProductsWithSpecification(input);
-			var product = await _unitOfWork.Repository<Product, int>().GetAllWithSpecificationAsync(spec);
+            var spec = new ProductsWithSpecification(input);
+            var product = await _unitOfWork.Repository<Product, int>().GetAllWithSpecificationAsync(spec);
 
             var countSpec = new ProductCountWithSpecification(input);
             var count = await _unitOfWork.Repository<Product, int>().GetCountSpecificationAsync(countSpec);
@@ -56,7 +55,7 @@ namespace Store.Service.Service
         {
             if (Id is null)
                 throw new Exception("Id is null");
-            var spec= new ProductsWithSpecification(Id);
+            var spec = new ProductsWithSpecification(Id);
             var product = await _unitOfWork.Repository<Product, int>().GetWithSpecificationByIdAsync(spec);
 
             if (product == null)

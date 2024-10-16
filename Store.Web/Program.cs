@@ -11,7 +11,7 @@ using Store.Service.Basket.AutoMapper;
 using Store.Service.Caching;
 using Store.Service.Interface;
 using Store.Service.Mapping;
-using Store.Service.Service;
+using Store.Service.TokenService;
 using Store.Web.Extensions;
 using Store.Web.Helper;
 
@@ -43,6 +43,7 @@ namespace Store.Web
 			builder.Services.AddScoped<IBasketRepostory, BasketRepostory>();
 			builder.Services.AddScoped<IBasketService, BasketService>();
 			builder.Services.AddScoped<IcacheService,cacheService>();
+			builder.Services.AddScoped<ITokenService,TokenService>();
 			builder.Services.AddAutoMapper(typeof(MappingProfile));
 			builder.Services.AddAutoMapper(typeof(BasketProfile));
 
@@ -54,7 +55,7 @@ namespace Store.Web
 				return ConnectionMultiplexer.Connect(configuration);
             });
 
-            builder.Services.AddIdentityServices();
+            builder.Services.AddIdentityServices(builder.Configuration);
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
