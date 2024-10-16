@@ -12,6 +12,7 @@ using Store.Service.Caching;
 using Store.Service.Interface;
 using Store.Service.Mapping;
 using Store.Service.TokenService;
+using Store.Service.UserService;
 using Store.Web.Extensions;
 using Store.Web.Helper;
 
@@ -44,6 +45,7 @@ namespace Store.Web
 			builder.Services.AddScoped<IBasketService, BasketService>();
 			builder.Services.AddScoped<IcacheService,cacheService>();
 			builder.Services.AddScoped<ITokenService,TokenService>();
+			builder.Services.AddScoped<IUserService,UserService>();
 			builder.Services.AddAutoMapper(typeof(MappingProfile));
 			builder.Services.AddAutoMapper(typeof(BasketProfile));
 

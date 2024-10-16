@@ -18,7 +18,7 @@ namespace Store.Web.Extensions
 						Contact=new OpenApiContact 
 						{
 							Name="3BS ACademy",
-							Email="abdelsalamm789@gamil.com",
+							Email="abdelsalamm89@gamil.com",
 							Url=new Uri("https://api.whatsapp.com/send/?phone=201068381215&text&type=phone_number&app_absent=0")
 						}
 					});
@@ -29,6 +29,7 @@ namespace Store.Web.Extensions
 					Name = "Authorization",
 					In = ParameterLocation.Header,
 					Type = SecuritySchemeType.ApiKey,
+					Scheme="bearer",
 					Reference = new OpenApiReference
 					{
 						Id = "bearer",
