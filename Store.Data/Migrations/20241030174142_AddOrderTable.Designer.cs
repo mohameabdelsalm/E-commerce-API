@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Store.Data.Contexts;
 
@@ -11,9 +12,11 @@ using Store.Data.Contexts;
 namespace Store.Data.Migrations
 {
     [DbContext(typeof(StoreDbcontext))]
-    partial class StoreDBcontextModelSnapshot : ModelSnapshot
+    [Migration("20241030174142_AddOrderTable")]
+    partial class AddOrderTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -50,7 +53,7 @@ namespace Store.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("deliveryMethods", (string)null);
+                    b.ToTable("deliveryMethods");
                 });
 
             modelBuilder.Entity("Store.Data.Entites.OrderEntity.Order", b =>
@@ -88,7 +91,7 @@ namespace Store.Data.Migrations
 
                     b.HasIndex("DeliveryMethodId");
 
-                    b.ToTable("orders", (string)null);
+                    b.ToTable("orders");
                 });
 
             modelBuilder.Entity("Store.Data.Entites.OrderEntity.OrderItem", b =>
@@ -113,7 +116,7 @@ namespace Store.Data.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("orderItems", (string)null);
+                    b.ToTable("orderItems");
                 });
 
             modelBuilder.Entity("Store.Data.Entites.Product", b =>
@@ -153,7 +156,7 @@ namespace Store.Data.Migrations
 
                     b.HasIndex("ProductTypeId");
 
-                    b.ToTable("products", (string)null);
+                    b.ToTable("products");
                 });
 
             modelBuilder.Entity("Store.Data.Entites.ProductBrand", b =>
@@ -173,7 +176,7 @@ namespace Store.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("productBrands", (string)null);
+                    b.ToTable("productBrands");
                 });
 
             modelBuilder.Entity("Store.Data.Entites.ProductType", b =>
@@ -193,7 +196,7 @@ namespace Store.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("productTypes", (string)null);
+                    b.ToTable("productTypes");
                 });
 
             modelBuilder.Entity("Store.Data.Entites.OrderEntity.Order", b =>
@@ -202,7 +205,7 @@ namespace Store.Data.Migrations
                         .WithMany()
                         .HasForeignKey("DeliveryMethodId");
 
-                    b.OwnsOne("Store.Data.Entites.OrderEntity.Order.ShippingAddress#Store.Data.Entites.OrderEntity.ShippingAddress", "ShippingAddress", b1 =>
+                    b.OwnsOne("Store.Data.Entites.OrderEntity.ShippingAddress", "ShippingAddress", b1 =>
                         {
                             b1.Property<Guid>("OrderId")
                                 .HasColumnType("uniqueidentifier");
@@ -233,7 +236,7 @@ namespace Store.Data.Migrations
 
                             b1.HasKey("OrderId");
 
-                            b1.ToTable("orders", (string)null);
+                            b1.ToTable("orders");
 
                             b1.WithOwner()
                                 .HasForeignKey("OrderId");
@@ -253,7 +256,7 @@ namespace Store.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.OwnsOne("Store.Data.Entites.OrderEntity.OrderItem.ProductItem#Store.Data.Entites.OrderEntity.ProductItem", "ProductItem", b1 =>
+                    b.OwnsOne("Store.Data.Entites.OrderEntity.ProductItem", "ProductItem", b1 =>
                         {
                             b1.Property<Guid>("OrderItemId")
                                 .HasColumnType("uniqueidentifier");
@@ -271,7 +274,7 @@ namespace Store.Data.Migrations
 
                             b1.HasKey("OrderItemId");
 
-                            b1.ToTable("orderItems", (string)null);
+                            b1.ToTable("orderItems");
 
                             b1.WithOwner()
                                 .HasForeignKey("OrderItemId");

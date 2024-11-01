@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Store.Data.Entites;
+using Store.Data.Entites.OrderEntity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,12 +15,14 @@ namespace Store.Data.Contexts
         public StoreDbcontext(DbContextOptions<StoreDbcontext> options) : base(options) { }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             base.OnModelCreating(modelBuilder);
         }
         public DbSet<ProductBrand> productBrands { get; set; }
         public DbSet<Product> products { get; set; }
         public DbSet<ProductType> productTypes { get; set; }
 		public DbSet<DeliveryMethod>deliveryMethods { get; set; }
-	}
+        public DbSet<Order> orders { get; set; }
+        public DbSet<OrderItem> orderItems { get; set; }
+    }
 }

@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace Store.Data.Entites
 {
-	public class DeliveryMethod:BaseEntity<int>
+	public class DeliveryMethod : BaseEntity<int>
 	{
+	
 		public string ShortName { get; set; }
 		public string Description { get; set; }
 		public string DeliveryTime { get; set; }
